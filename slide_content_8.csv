@@ -1,0 +1,732 @@
+Slide Number,Content
+1,"Part VIII
+Transactions, Integrity and Triggers"
+2,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+3,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+4,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+5,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+6,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+7,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+8,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+9,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+10,"Transactions, Integrity and Triggers
+Transactions, Integrity and Triggers
+1Basic Terms
+2Term Transaction
+3Possible Problems with Parallel Transactions
+4Transactions in SQL
+5Integrity Constraints in SQL
+6Trigger
+7Integrity Enforcement with Triggers
+8Trigger in Oracle
+9Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–1"
+11,"Transactions, Integrity and Triggers
+Learning goals for today . . .
+Understanding of fundamentals of integrity
+control in databases
+Knowledge to formalize and implement
+integrity constraints
+Knowledge of the transaction concept in
+databases
+Saake Database Concepts Last Edited: April 20, 2022 8–2"
+12,"Transactions, Integrity and Triggers
+Learning goals for today . . .
+Understanding of fundamentals of integrity
+control in databases
+Knowledge to formalize and implement
+integrity constraints
+Knowledge of the transaction concept in
+databases
+Saake Database Concepts Last Edited: April 20, 2022 8–2"
+13,"Transactions, Integrity and Triggers
+Learning goals for today . . .
+Understanding of fundamentals of integrity
+control in databases
+Knowledge to formalize and implement
+integrity constraints
+Knowledge of the transaction concept in
+databases
+Saake Database Concepts Last Edited: April 20, 2022 8–2"
+14,"Transactions, Integrity and Triggers Basic Terms
+Basic Terms
+Saake Database Concepts Last Edited: April 20, 2022 8–3"
+15,"Transactions, Integrity and Triggers Basic Terms
+Integrity
+Integrity constraint (also: assertion ): Condition for the
+""permissibility"" or ""correctness""
+with respect to databases:
+I(single) database states,
+Istate transitions from an old to a new database state,
+Ilong term database evolution
+Saake Database Concepts Last Edited: April 20, 2022 8–4"
+16,"Transactions, Integrity and Triggers Basic Terms
+Classiﬁcation of Integrity
+Constraint Class Temporal Context
+static database state
+dynamic transitional state transition
+temporal state sequence
+Saake Database Concepts Last Edited: April 20, 2022 8–5"
+17,"Transactions, Integrity and Triggers Basic Terms
+Inherent Integrity Constraints in the RM
+1Type Integrity :
+ISQL allows domain deﬁnitions for a range of values for attributes
+IPermission or forbidding of null values
+2Key Integrity :
+ISpeciﬁcation of a key for a relation
+3Referential Integrity :
+ISpeciﬁcation of foreign keys
+Saake Database Concepts Last Edited: April 20, 2022 8–6"
+18,"Transactions, Integrity and Triggers Term Transaction
+Term Transaction
+Saake Database Concepts Last Edited: April 20, 2022 8–7"
+19,"Transactions, Integrity and Triggers Term Transaction
+Example Scenarios
+Seat reservation for ﬂights simultaneously from multiple travel
+agencies
+!Seat could be sold multiple times when multiple travel agencies
+identify the seat as available
+Overlapping account operations of a bank
+Statistics database operations
+!results are corrupted when data is changed during the
+calculation
+Saake Database Concepts Last Edited: April 20, 2022 8–8"
+20,"Transactions, Integrity and Triggers Term Transaction
+Transaction
+A transaction is a sequence of operations (actions) that transforms
+the database from a consistent state into a consistent, possibly
+changed, state, while the ACID-principle must be hold.
+Aspects:
+ISemantic Integrity: Correct (consistent) DB-state after a transaction
+has ﬁnished
+IOperational Integrity: Prevent fault caused by ""simultaneous""
+access of multiple users on the same data
+Saake Database Concepts Last Edited: April 20, 2022 8–9"
+21,"Transactions, Integrity and Triggers Term Transaction
+ACID-Properties
+Atomicity:
+Transaction is executed completely or not at all
+Consistency:
+Database is before the start and after the end of a transaction in a
+consistent state
+Isolation:
+User, who is working on a database, should have the impression
+that she works alone on the database
+Durability (Persistence):
+The result of transaction has to be saved ""permanently"" in a
+database after the transaction competed successfully
+Saake Database Concepts Last Edited: April 20, 2022 8–10"
+22,"Transactions, Integrity and Triggers Term Transaction
+Commands of a Transaction Language
+Begin of a transaction: Begin-of-Transaction-Command BOT
+(implicit in SQL!)
+commit : the transaction should try to ﬁnish successfully
+Isuccess is not guaranteed!
+abort : the transaction has to be aborted
+Iabort is guaranteed!
+Saake Database Concepts Last Edited: April 20, 2022 8–11"
+23,"Transactions, Integrity and Triggers Term Transaction
+Transaction: Integrity Violation
+Example:
+ITransfer of an amount Afrom a household post K1to another post
+K2
+ICondition: Sum of the account balances stays constant
+Simpliﬁed notation
+Transfer = <K1:=K1-A; K2:=K2+A >;
+Realization in SQL: as sequence of two elementary changes  
+Condition is not necessarily fulﬁlled between single changing
+steps!
+Saake Database Concepts Last Edited: April 20, 2022 8–12"
+24,"Transactions, Integrity and Triggers Term Transaction
+Transaction: Behavior at System Crash
+1T2T3T4T5TtTimeCrash
+f
+Saake Database Concepts Last Edited: April 20, 2022 8–13"
+25,"Transactions, Integrity and Triggers Term Transaction
+Transaction: Behavior at System Crash /2
+Consequences:
+IContents of the volatile memory at the time tfis unusable!
+transactions in different ways affected by this
+Transaction states:
+IStill active transactions at the time of the failure ( T2and T4)
+IAlready ﬁnished transactions before the time of the failure ( T1,T3
+and T5)
+Saake Database Concepts Last Edited: April 20, 2022 8–14"
+26,"Transactions, Integrity and Triggers Term Transaction
+Simpliﬁed Model for Transactions
+Representation of database changes of a transaction
+Iread(A,x): assign the value of the DB-object Ato the variable x
+Iwrite (x,A): save the value of the variable xin the DB-object A
+Example of a transaction T:
+read (A,x);x:=x 200;write (x,A);
+read (B,y);y:=y+100;write (y,B);
+Execution variants for two transactions T1,T2:
+Iserially, e.g. T1before T2
+I""mixed"", e.g. alternating steps of T1and T2
+Saake Database Concepts Last Edited: April 20, 2022 8–15"
+27,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+Possible Problems with Parallel Transactions
+Saake Database Concepts Last Edited: April 20, 2022 8–16"
+28,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+Problems with Multi-User Operation
+Nonrepeatable Read
+Dependencies on not released data: Dirty Read
+The Phantom-Problem
+Lost Update
+Saake Database Concepts Last Edited: April 20, 2022 8–17"
+29,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+Nonrepeatable Read
+Example:
+Assurance x=A+B+Cat the end of transaction T1
+x;y;zare local variables
+Tiis the transaction i
+Integrity constraint A+B+C=0
+Saake Database Concepts Last Edited: April 20, 2022 8–18"
+30,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+Example for Nonrepeatable Read
+T1 T2
+read(A;x);
+read(A;y);
+y:=y=2;
+write (y;A);
+read(C;z);
+z:=z+y;
+write (z;C);
+commit ;
+read(B;y);
+x:=x+y;
+read(C;z);
+x:=x+z;
+commit ;
+Saake Database Concepts Last Edited: April 20, 2022 8–19"
+31,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+Dirty Read
+T1 T2
+read(A;x);
+x:=x+100;
+write (x;A);
+read(A;x);
+read(B;y);
+y:=y+x;
+write (y;B);
+commit ;
+abort ;
+Saake Database Concepts Last Edited: April 20, 2022 8–20"
+32,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+The Phantom-Problem
+T1 T2
+select count (*)
+into X
+from Customer ;
+insert
+into Customer
+values (’Meier’, 0, . . . );
+commit ;
+update Customer
+setBonus =
+Bonus +10000=X;
+commit ;
+Saake Database Concepts Last Edited: April 20, 2022 8–21"
+33,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+Lost Update
+T1 T2 A
+read(A;x); 10
+read(A;x); 10
+x:=x+1; 10
+x:=x+1;10
+write (x;A); 11
+write (x;A);11
+Saake Database Concepts Last Edited: April 20, 2022 8–22"
+34,"Transactions, Integrity and Triggers Possible Problems with Parallel Transactions
+Serializability
+An interleaved execution of multiple transactions is called
+serializable, if its effect is identical to the effect of a (arbitrarily
+chosen) serial execution of these transactions.
+Problem for checking serializability:
+Ithere are n!different serial execution orders for ntransactions...
+Schedule: Plan of execution for transactions (ordered list of
+transaction operations)
+Saake Database Concepts Last Edited: April 20, 2022 8–23"
+35,"Transactions, Integrity and Triggers Transactions in SQL
+Transactions in SQL
+Saake Database Concepts Last Edited: April 20, 2022 8–24"
+36,"Transactions, Integrity and Triggers Transactions in SQL
+Transactions in SQL-DBS
+Weakening of ACID in SQL: Isolation levels
+set transaction
+[ { read only |read write }, ]
+[isolation level
+{read uncommitted |
+read committed |
+repeatable read |
+serializable }, ]
+[diagnostics size ...]
+Default settings:
+set transaction read write ,
+isolation level serializable
+Saake Database Concepts Last Edited: April 20, 2022 8–25"
+37,"Transactions, Integrity and Triggers Transactions in SQL
+Meaning of Isolation Levels
+read uncommitted
+Iweakest level: access to not committed data, only for read only
+transactions
+Istatistic and similar transactions (approximate overview, incorrect
+values possible)
+Ino locks!efﬁcient executable, other transactions are not hindered
+read committed
+Ionly read ﬁnally written values, but nonrepeatable read possible
+repeatable read
+Inononrepeatable read , but phantom-problem can occur
+serializable
+Iguarantees serializability
+Saake Database Concepts Last Edited: April 20, 2022 8–26"
+38,"Transactions, Integrity and Triggers Transactions in SQL
+Isolation Levels: read committed
+T1 T2
+set transaction
+isolation level
+read committed
+1select Name from WINES
+where WineID = 1014
+ !Riesling
+2 update WINES
+set Name = ’ Riesling Superi-
+ore’
+where WineID = 1014
+3select Name from WINES
+where WineID = 1014
+ !Riesling
+4 commit
+5select Name from WINES
+where WineID = 1014
+ !Riesling Superiore
+Saake Database Concepts Last Edited: April 20, 2022 8–27"
+39,"Transactions, Integrity and Triggers Transactions in SQL
+Isolation Levels: read committed /2
+T1 T2
+set transaction
+isolation level
+read committed
+1select Name from WINES
+where WineID = 1014
+2 update WINES
+set Name = ’ Riesling Super-
+ore’
+where WineID = 1014
+3update WINES
+set Name = ’ Superiore Ries-
+ling’
+where WineID = 1014
+ ! blocked
+4 commit
+5commit
+Saake Database Concepts Last Edited: April 20, 2022 8–28"
+40,"Transactions, Integrity and Triggers Transactions in SQL
+Isolation Levels: serializable
+T1 T2
+set transaction
+isolation level
+serializable
+1select Name into Nfrom
+WINES where WineID = 1014
+ ! N := Riesling
+2 update WINES
+set Name = ’ Riesling Superi-
+ore’
+where WineID = 1014
+4 commit
+5update WINES
+set Name = ’ Superior ’ || N
+where WineID = 1014
+ ! Abort
+Saake Database Concepts Last Edited: April 20, 2022 8–29"
+41,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+Integrity Constraints in SQL
+Saake Database Concepts Last Edited: April 20, 2022 8–30"
+42,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+Integrity Constraints in SQL-DDL
+not null : Null values prohibited
+default : Speciﬁcation of default values
+check (search-condition ): Attribute speciﬁc constraint (usually
+One-Tuple-Integrity-Condition )
+primary key : Speciﬁcation of a primary key
+foreign key (Attribute(e) )
+references Table (Attribute(e) ):
+Speciﬁcation of the referential integrity
+Saake Database Concepts Last Edited: April 20, 2022 8–31"
+43,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+Integrity Constraints: Range of Values
+create domain : Establishing of a user deﬁned range of values
+Example
+create domain WineColor varchar (5)
+default ’Red’
+check (value in (’Red’, ’White’, ’Rose’))
+Application
+create table WINES (
+WineID int primary key ,
+Name varchar (20) not null ,
+Color WineColor,
+...)
+Saake Database Concepts Last Edited: April 20, 2022 8–32"
+44,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+Integrity Constraints: check -Clause
+check : Establishing of further local integrity constraints within the
+deﬁned range of values, attributes and relational scheme
+Example: Restriction of permitted values
+Example
+create table WINES (
+WineID int primary key ,
+Name varchar (20) not null ,
+Year int check (Year between 1980 and 2010),
+...
+)
+Saake Database Concepts Last Edited: April 20, 2022 8–33"
+45,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+Preservation of Referential Integrity
+Checking of foreign keys after database changes
+forA(r1)K(r2),
+e.g.Vineyard (WINES )Vineyard (PRODUCER )
+ITuple tis inserted into r1)check, whether t02r2exists with:
+t0(K) =t(A), d.h. t(A)2K(r2)
+if not)reject
+ITuple t0is removed from r2)check, whether A=t0(K)(r1) =fg, i.e.
+no tuple from r1references t0
+if not empty)reject or remove tuple from r1, that reference t0(at
+cascading deletion)
+Saake Database Concepts Last Edited: April 20, 2022 8–34"
+46,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+Checking Modes of Constraints
+on update | delete
+Speciﬁcation of a triggering event that starts the checking of the
+condition
+cascade |set null |set default |no action
+Cascading: Handling of some integrity violations propagates over
+multiple levels, e.g. deletion as reaction on a violation of the
+referential integrity
+deferred |immediate sets the checking time for a condition
+Ideferred : put back to the end of the transaction
+Iimmediate : immediate veriﬁcation at any relevant database change
+Saake Database Concepts Last Edited: April 20, 2022 8–35"
+47,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+Checking Modes: Example
+Cascading deletion
+create table WINES (
+WineID int primary key ,
+Name varchar (50) not null ,
+Price float not null ,
+Jahr int not null ,
+Vineyard varchar (30),
+foreign key (Vineyard) references PRODUCER (Vineyard)
+on delete cascade )
+Saake Database Concepts Last Edited: April 20, 2022 8–36"
+48,"Transactions, Integrity and Triggers Integrity Constraints in SQL
+The assertion -Clause
+Assertion: Predicate expressed by a condition that always has to
+be fulﬁlled by a database
+Syntax (SQL:2003)
+create assertion name check (predicate )
+Example:
+create assertion Prices check
+( ( select sum (Price)
+from WINES)<10000 )
+create assertion Prices2 check
+(not exists (
+select *from WINES where Price>200) )
+Saake Database Concepts Last Edited: April 20, 2022 8–37"
+49,"Transactions, Integrity and Triggers Trigger
+Trigger
+Saake Database Concepts Last Edited: April 20, 2022 8–38"
+50,"Transactions, Integrity and Triggers Trigger
+Trigger
+Trigger: Statement/Procedure that is executed automatically by
+the DBMS at the occurrence of a speciﬁc event
+Application:
+IEnforcement of integrity conditions (""implementation"" of integrity
+rules)
+IAuditing of DB-actions
+IPropagation of DB-changes
+Deﬁnition:
+create trigger ...
+after<Operation>
+<Procedure>
+Saake Database Concepts Last Edited: April 20, 2022 8–39"
+51,"Transactions, Integrity and Triggers Trigger
+Example for Triggers
+Realization of a calculated attribute with two triggers:
+IIntroduction of new tasks
+create trigger TaskCounter+
+on insertion of Task A:
+update Customer
+set NrTasks = NrTasks + 1
+where CName = new A.CName
+IAnalogously for deletion of tasks:
+create trigger TaskCounter-
+on deletion ...:
+update ...- 1 ...
+Saake Database Concepts Last Edited: April 20, 2022 8–40"
+52,"Transactions, Integrity and Triggers Trigger
+Trigger: Design and Implementation
+Speciﬁcation of
+IEvent andcondition for activation of the trigger
+IAction(s) for the execution
+Syntax in SQL:2003 deﬁned
+Available in most commercial systems (but with different syntax)
+Saake Database Concepts Last Edited: April 20, 2022 8–41"
+53,"Transactions, Integrity and Triggers Trigger
+SQL:2003-Trigger
+Syntax:
+create trigger <Name:>
+afterjbefore<Event>
+on<Relation>
+[when<Condition>]
+begin atomic <SQL-statements >end
+Event :
+Iinsert
+Iupdate [of<list of attributes >]
+Idelete
+Saake Database Concepts Last Edited: April 20, 2022 8–42"
+54,"Transactions, Integrity and Triggers Trigger
+Further Speciﬁcations for Triggers
+for each row resp. for each statement : Activation of the trigger
+foreach single change of a set-valued change or just once for the
+whole change
+before resp. after : Activation before orafter the change
+referencing new as resp. referencing old as : Binding of a
+tuple variable on the new introduced resp. just removed (""old"")
+tuple of a relation
+ tuple of the difference relation
+Saake Database Concepts Last Edited: April 20, 2022 8–43"
+55,"Transactions, Integrity and Triggers Trigger
+Example for Triggers
+No customer account can fall below 0:
+create trigger bad_account
+after update of Acc onCUSTOMER
+referencing new as INSERTED
+when (exists
+(select *from INSERTED where Acc < 0)
+)
+begin atomic
+rollback ;
+end
+ similar trigger for insert
+Saake Database Concepts Last Edited: April 20, 2022 8–44"
+56,"Transactions, Integrity and Triggers Trigger
+Example for triggers /2
+Producers must be removed, if they do not offer any wine:
+create trigger useless _Vineyard
+after delete on WINES
+referencing old as o
+for each row
+when (not exists
+(select *from WINES W
+where W.Vineyard = o.Vineyard))
+begin atomic
+delete from PRODUCER where Vineyard =o.Vineyard;
+end
+Saake Database Concepts Last Edited: April 20, 2022 8–45"
+57,"Transactions, Integrity and Triggers Integrity Enforcement with Triggers
+Integrity Enforcement with Triggers
+Saake Database Concepts Last Edited: April 20, 2022 8–46"
+58,"Transactions, Integrity and Triggers Integrity Enforcement with Triggers
+Integrity Enforcement with Triggers
+1. Specify object oi, for which the condition should be monitored
+IUsually monitor multiple oiwhen condition is across relations
+ICandidates for oiare tuples of the relation names that occur in 
+2. Specify the elemental database changes uijon objects oithat can
+violate
+IRules: e.g., check existence requirements on deletion and updates,
+but not on insertion etc.
+Saake Database Concepts Last Edited: April 20, 2022 8–47"
+59,"Transactions, Integrity and Triggers Integrity Enforcement with Triggers
+Integrity Enforcement with Triggers /2
+3. Specify, depending on the application, the reaction rion the
+integrity violation
+IReset the transaction ( rollback )
+ICorrecting database changes
+4. Formulate following triggers:
+create trigger t-phi-ij after uijonoi
+when:
+begin riend
+5. If possible, simplify the created trigger
+Saake Database Concepts Last Edited: April 20, 2022 8–48"
+60,"Transactions, Integrity and Triggers Trigger in Oracle
+Trigger in Oracle
+Saake Database Concepts Last Edited: April 20, 2022 8–49"
+61,"Transactions, Integrity and Triggers Trigger in Oracle
+Trigger in Oracle
+Implementation in PL/SQL
+Notation
+create [or replace ]trigger trigger-name
+before |after
+insert or update [ofcolumns ]
+or delete on table
+[for each row
+[when (predicate ) ] ]
+PL/SQL-Block
+Saake Database Concepts Last Edited: April 20, 2022 8–50"
+62,"Transactions, Integrity and Triggers Trigger in Oracle
+Trigger in Oracle: Types
+Statement level trigger: Trigger is triggered before resp. after the
+DML-statement
+Row level trigger: Trigger is triggered before resp. after each
+single modiﬁcation ( one tuple at a time )
+Trigger on row level:
+Predicate for restriction ( when)
+Access on old ( :old .col) resp. new ( :new .col) tuple
+Ifordelete : only ( :old .col)
+Iforinsert : only ( :new .col)
+Iinwhen-clause only ( new.col) resp. ( old.col)
+Saake Database Concepts Last Edited: April 20, 2022 8–51"
+63,"Transactions, Integrity and Triggers Trigger in Oracle
+Trigger in Oracle /2
+Transaction abortion with raise _application _error (code ,
+message )
+Distinction of the type of the DML-statement
+if deleting then ... end if ;
+if updating then ... end if ;
+if inserting then ... end if ;
+Saake Database Concepts Last Edited: April 20, 2022 8–52"
+64,"Transactions, Integrity and Triggers Trigger in Oracle
+Trigger in Oracle: Example
+No customer account can fall below 0:
+create or replace trigger bad_account
+after insert or update of Acc onCustomer
+for each row
+when (:new .Acc < 0)
+begin
+raise _application _error (-20221,
+’Not below 0’);
+end;
+Saake Database Concepts Last Edited: April 20, 2022 8–53"
+65,"Transactions, Integrity and Triggers Summary
+Summary
+Saake Database Concepts Last Edited: April 20, 2022 8–54"
+66,"Transactions, Integrity and Triggers Summary
+Summary
+Enforcement of correctness resp. integrity of the data
+Inherent integrity constraints of the relational model
+Additional SQL-integrity constraints: check -clause,
+assertion -statement
+Trigger for ""implementation"" of integrity constraints resp. rules
+Saake Database Concepts Last Edited: April 20, 2022 8–55"
+67,"Transactions, Integrity and Triggers Summary
+Control Questions
+What is the purpose of integrity
+enforcement? Which types of integrity
+constraints are there?
+How can integrity constraints and rules be
+formulated in SQL systems?
+What requirements result from the
+ACID-principle? How are these achieved
+in database systems?
+Saake Database Concepts Last Edited: April 20, 2022 8–56"
+68,"Transactions, Integrity and Triggers Summary
+Control Questions
+What is the purpose of integrity
+enforcement? Which types of integrity
+constraints are there?
+How can integrity constraints and rules be
+formulated in SQL systems?
+What requirements result from the
+ACID-principle? How are these achieved
+in database systems?
+Saake Database Concepts Last Edited: April 20, 2022 8–56"
+69,"Transactions, Integrity and Triggers Summary
+Control Questions
+What is the purpose of integrity
+enforcement? Which types of integrity
+constraints are there?
+How can integrity constraints and rules be
+formulated in SQL systems?
+What requirements result from the
+ACID-principle? How are these achieved
+in database systems?
+Saake Database Concepts Last Edited: April 20, 2022 8–56"

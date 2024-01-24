@@ -1,0 +1,581 @@
+Slide Number,Content
+1,"Part II
+Relational Databases – Data as Tables"
+2,"Relational Databases – Data as Tables
+Relational Databases – Data as Tables
+1Relations for Tabular Data
+2SQL Data Deﬁnition
+3Basic Operations: The Relational Algebra
+4SQL as a Query Language
+5Manipulation Operations in SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–1"
+3,"Relational Databases – Data as Tables
+Relational Databases – Data as Tables
+1Relations for Tabular Data
+2SQL Data Deﬁnition
+3Basic Operations: The Relational Algebra
+4SQL as a Query Language
+5Manipulation Operations in SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–1"
+4,"Relational Databases – Data as Tables
+Relational Databases – Data as Tables
+1Relations for Tabular Data
+2SQL Data Deﬁnition
+3Basic Operations: The Relational Algebra
+4SQL as a Query Language
+5Manipulation Operations in SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–1"
+5,"Relational Databases – Data as Tables
+Relational Databases – Data as Tables
+1Relations for Tabular Data
+2SQL Data Deﬁnition
+3Basic Operations: The Relational Algebra
+4SQL as a Query Language
+5Manipulation Operations in SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–1"
+6,"Relational Databases – Data as Tables
+Relational Databases – Data as Tables
+1Relations for Tabular Data
+2SQL Data Deﬁnition
+3Basic Operations: The Relational Algebra
+4SQL as a Query Language
+5Manipulation Operations in SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–1"
+7,"Relational Databases – Data as Tables
+Educational Objective for Today . . .
+Basic understanding of the structure of
+relational databases
+Knowledge of base operations of
+relational query languages
+Elementary ability to use SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–2"
+8,"Relational Databases – Data as Tables
+Educational Objective for Today . . .
+Basic understanding of the structure of
+relational databases
+Knowledge of base operations of
+relational query languages
+Elementary ability to use SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–2"
+9,"Relational Databases – Data as Tables
+Educational Objective for Today . . .
+Basic understanding of the structure of
+relational databases
+Knowledge of base operations of
+relational query languages
+Elementary ability to use SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–2"
+10,"Relational Databases – Data as Tables Relations for Tabular Data
+Relations for Tabular Data
+Saake Database Concepts Last Edited: April 20, 2022 2–3"
+11,"Relational Databases – Data as Tables Relations for Tabular Data
+Relational Model
+Conceptually, a database is a set of tables
+WINES WineID Name Color Vintage Vineyard
+1042 La Rose Grand Cru Red 1998 Château La Rose
+2168 Creek Shiraz Red 2003 Creek
+3456 Zinfandel Red 2004 Helena
+2171 Pinot Noir Red 2001 Creek
+3478 Pinot Noir Red 1999 Helena
+4711 Riesling Reserve White 1999 Müller
+4961 Chardonnay White 2002 Bighorn
+ORIGIN Vineyard District Region
+Creek Barossa Valley South Australia
+Helena Napa Valley California
+Château La Rose Saint-Emilion Bordeaux
+Château La Pointe Pomerol Bordeaux
+Müller Rheingau Hessen
+Bighorn Napa Valley California
+Table = “Relation”
+Saake Database Concepts Last Edited: April 20, 2022 2–4"
+12,"Relational Databases – Data as Tables Relations for Tabular Data
+Presentation of Relations; Terminology
+Bold ﬁelds: relation schema
+Further entries in the table: relation
+A table row: tuple
+A column heading: attribute
+An entry: attribute value
+A1...An.........RRelation NameAttributeTupleRelationRelation Schema
+Saake Database Concepts Last Edited: April 20, 2022 2–5"
+13,"Relational Databases – Data as Tables Relations for Tabular Data
+Integrity Constraints: Keys
+Attributes of a column unambiguously identify stored tuples: key
+property
+E.g., Vineyard for table ORIGIN
+ORIGIN Vineyard District Region
+Creek Barossa Valley South Australia
+Helena Napa Valley California
+Château La Rose Saint-Emilion Bordeaux
+Château La Pointe Pomerol Bordeaux
+Müller Rheingau Hessen
+Bighorn Napa Valley California
+Combinations of attributes can also be keys!
+Keys can be marked by underlining them
+Saake Database Concepts Last Edited: April 20, 2022 2–6"
+14,"Relational Databases – Data as Tables Relations for Tabular Data
+Integrity Constraints: Foreign Keys
+Keys in one table can be used as unambiguous references in
+another table (or even in the same table!): Foreign key, referential
+integrity
+E.g., Vineyard as a reference to ORIGIN
+A foreign key is a key in a “foreign” table
+Saake Database Concepts Last Edited: April 20, 2022 2–7"
+15,"Relational Databases – Data as Tables Relations for Tabular Data
+Foreign Keys /2
+WINES WineID Name Color Vintage Vineyard!ORIGIN
+1042 La Rose Grand Cru Red 1998 Château La Rose
+2168 Creek Shiraz Red 2003 Creek
+3456 Zinfandel Red 2004 Helena
+2171 Pinot Noir Red 2001 Creek
+3478 Pinot Noir Red 1999 Helena
+4711 Riesling Reserve White 1999 Müller
+4961 Chardonnay White 2002 Bighorn
+ORIGIN Vineyard District Region
+Creek Barossa Valley South Australia
+Helena Napa Valley California
+Château La Rose Saint-Emilion Bordeaux
+Château La Pointe Pomerol Bordeaux
+Müller Rheingau Hessen
+Bighorn Napa Valley California
+Saake Database Concepts Last Edited: April 20, 2022 2–8"
+16,"Relational Databases – Data as Tables SQL Data Deﬁnition
+SQL Data Deﬁnition
+Saake Database Concepts Last Edited: April 20, 2022 2–9"
+17,"Relational Databases – Data as Tables SQL Data Deﬁnition
+The create table Statement
+create table base _relation _name (
+column _name 1domain 1[not null ],
+...
+column _name kdomain k[not null ])
+Effect of this command is both
+Ito store the relation schema in the data dictionary, and
+Ito prepare an “empty base relation” in the database
+Saake Database Concepts Last Edited: April 20, 2022 2–10"
+18,"Relational Databases – Data as Tables SQL Data Deﬁnition
+Possible Domains in SQL
+integer (also: integer4 ,int),
+smallint (also: integer2 ),
+float (p) (also, for short, float ),
+decimal (p,q) and numeric (p,q) with qdecimal places,
+character (n) (also, for short, char(n), with n= 1 just char) for
+character strings of ﬁxed length n,
+character varying (n) (also, for short, varchar (n) for
+variable-length character strings up to the maximum length n,
+bit(n) orbit varying (n) like varchar but for bit strings, and
+date,time,timestamp for specifying dates, times and the
+combination of date and time
+Saake Database Concepts Last Edited: April 20, 2022 2–11"
+19,"Relational Databases – Data as Tables SQL Data Deﬁnition
+Example for create table
+create table WINES (
+WineID int not null ,
+Name varchar (20) not null ,
+Color varchar (10),
+Vintage int,
+Vineyard varchar (20),
+primary key (WineID))
+primary key marks column as key attribute
+Saake Database Concepts Last Edited: April 20, 2022 2–12"
+20,"Relational Databases – Data as Tables SQL Data Deﬁnition
+create table with Foreign Key
+create table WINES (
+WineID int,
+Name varchar (20) not null ,
+Color varchar (10),
+Vintage int,
+Vineyard varchar (20),
+primary key (WineID),
+foreign key (Vineyard)
+references ORIGIN(Vineyard))
+foreign key marks column as a foreign key
+Saake Database Concepts Last Edited: April 20, 2022 2–13"
+21,"Relational Databases – Data as Tables SQL Data Deﬁnition
+Null Values
+not null precludes null values as attribute values for certain
+columns
+SQL uses null to refer to null values; we use ?
+null has the semantics of “ unknown value ”, “value does not
+apply ” oder “ value does not exist ”; however, null itself does not
+belong to any domain
+null can occur in any column, except for key attributes or columns
+marked not null
+Saake Database Concepts Last Edited: April 20, 2022 2–14"
+22,"Relational Databases – Data as Tables SQL Data Deﬁnition
+Additional Notes on Data Deﬁnition in SQL
+Apart from primary and foreign keys, SQL allows specifying the
+following:
+IDefault values for attributes using the default clause,
+Icreate domain statement to deﬁne custom domains (data types),
+and
+Icheck clause to specify further local integrity constraints within the
+domains, attributes and relation schemata being deﬁned
+Saake Database Concepts Last Edited: April 20, 2022 2–15"
+23,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Basic Operations: The Relational Algebra
+Saake Database Concepts Last Edited: April 20, 2022 2–16"
+24,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Query Operations on Tables
+Basic operations on tables that allow computing new result tables
+from saved database tables
+Operations are combined to form the so-called relational algebra
+Mathematics: algebra is deﬁned by a domain and operations
+deﬁned on that domain
+!for database queries, the contents of the database are the
+values (of the domain), operations are functions to compute query
+results
+Query operations can be freely combined and form an algebra to
+perform “calculations on tables” – the so-called relational algebra
+Saake Database Concepts Last Edited: April 20, 2022 2–17"
+25,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Relational Algebra: Overview
+a1b2a2b2b2c3b3c4a2b3b4c5a1b2a2b2a2b3c3c3c4JoinSelectionProjection
+Saake Database Concepts Last Edited: April 20, 2022 2–18"
+26,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Selection 
+Selection: Choose rows in a table based on a selection predicate
+Vintage>2000(WINES )
+WineID Name Color Vintage Vineyard
+2168 Creek Shiraz Red 2003 Creek
+3456 Zinfandel Red 2004 Helena
+2171 Pinot Noir Red 2001 Creek
+4961 Chardonnay White 2002 Bighorn
+Saake Database Concepts Last Edited: April 20, 2022 2–19"
+27,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Projection 
+Projection: Choose columns by specifying a list of attributes
+Region (ORIGIN )
+Region
+South Australia
+California
+Bordeaux
+Hessen
+Projection removes duplicate tuples.
+Saake Database Concepts Last Edited: April 20, 2022 2–20"
+28,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Projection 
+Projection: Choose columns by specifying a list of attributes
+Region (ORIGIN )
+Region
+South Australia
+California
+Bordeaux
+Hessen
+Projection removes duplicate tuples.
+Saake Database Concepts Last Edited: April 20, 2022 2–20"
+29,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Natural Join o n
+Join: connects tables via same-named columns, combining two
+tuples if they have equal values in those columns
+WINESo nORIGIN
+WineID Name ::: Vineyard District Region
+1042 La Rose Grand Cru ::: Ch. La Rose Saint-Emilion Bordeaux
+2168 Creek Shiraz ::: Creek Barossa Valley South Australia
+3456 Zinfandel ::: Helena Napa Valley California
+2171 Pinot Noir ::: Creek Barossa Valley South Australia
+3478 Pinot Noir ::: Helena Napa Valley California
+4711 Riesling Reserve ::: Müller Rheingau Hessen
+4961 Chardonnay ::: Bighorn Napa Valley California
+The vineyard “Château La Pointe” is missing from the result  
+tuples that do not ﬁnd a partner ( dangling tuples ), are eliminated
+Saake Database Concepts Last Edited: April 20, 2022 2–21"
+30,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Natural Join o n
+Join: connects tables via same-named columns, combining two
+tuples if they have equal values in those columns
+WINESo nORIGIN
+WineID Name ::: Vineyard District Region
+1042 La Rose Grand Cru ::: Ch. La Rose Saint-Emilion Bordeaux
+2168 Creek Shiraz ::: Creek Barossa Valley South Australia
+3456 Zinfandel ::: Helena Napa Valley California
+2171 Pinot Noir ::: Creek Barossa Valley South Australia
+3478 Pinot Noir ::: Helena Napa Valley California
+4711 Riesling Reserve ::: Müller Rheingau Hessen
+4961 Chardonnay ::: Bighorn Napa Valley California
+The vineyard “Château La Pointe” is missing from the result  
+tuples that do not ﬁnd a partner ( dangling tuples ), are eliminated
+Saake Database Concepts Last Edited: April 20, 2022 2–21"
+31,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Combining Operations
+Name,Color,Vineyard (Vintage>2000(WINES) o nRegion=’California’ (ORIGIN) )
+yields
+Name Color Vineyard
+Zinfandel Red Helena
+Chardonnay White Bighorn
+Saake Database Concepts Last Edited: April 20, 2022 2–22"
+32,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Renaming 
+Renaming to adapt attribute names:
+WINELIST Name
+La Rose Grand Cru
+Creek Shiraz
+Zinfandel
+Pinot Noir
+Riesling ReserveRECOMMENDATION Wine
+La Rose Grand Cru
+Riesling Reserve
+Merlot Selection
+Sauvignon Blanc
+Adapt with:
+Name Wine (RECOMMENDATION)
+Saake Database Concepts Last Edited: April 20, 2022 2–23"
+33,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Set Operations
+Union r1[r2of two relations r1and r2: collects the tuple sets of
+two relations in a common schema
+Both relations must have the same set of attributes
+WINELIST[Name Wine (RECOMMENDATION )
+Name
+La Rose Grand Cru
+Creek Shiraz
+Zinfandel
+Pinot Noir
+Riesling Reserve
+Merlot Selection
+Sauvignon Blanc
+Saake Database Concepts Last Edited: April 20, 2022 2–24"
+34,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Set Operations /2
+Difference r1 r2removes from the ﬁrst relation all tuples that are
+present in the second relation
+WINELIST Name Wine (RECOMMENDATION )
+yields:
+Name
+Creek Shiraz
+Zinfandel
+Pinot Noir
+Saake Database Concepts Last Edited: April 20, 2022 2–25"
+35,"Relational Databases – Data as Tables Basic Operations: The Relational Algebra
+Set Operations /3
+Intersection r1\r2: yields all tuples that are present in both
+relations
+WINELIST\Name Wine (RECOMMENDATION )
+yields:
+Name
+La Rose Grand Cru
+Riesling Reserve
+Saake Database Concepts Last Edited: April 20, 2022 2–26"
+36,"Relational Databases – Data as Tables SQL as a Query Language
+SQL as a Query Language
+Saake Database Concepts Last Edited: April 20, 2022 2–27"
+37,"Relational Databases – Data as Tables SQL as a Query Language
+SQL Query as a Standard Language
+Query a single table
+select Name, Color
+from WINES
+where Vintage = 2002
+SQL has multi-set semantics — SQL does not automatically
+suppress duplicate table entries!
+Set semantics by using distinct
+select distinct Name
+from WINES
+Saake Database Concepts Last Edited: April 20, 2022 2–28"
+38,"Relational Databases – Data as Tables SQL as a Query Language
+Joining Tables
+Cross join as basic join
+select *
+from WINES, ORIGIN
+Join with operator natural join
+select *
+from WINES natural join ORIGIN
+Alternatively, join by specifying a join condition!
+select *
+from WINES, ORIGIN
+where WINES.Vineyard = ORIGIN.Vineyard
+Saake Database Concepts Last Edited: April 20, 2022 2–29"
+39,"Relational Databases – Data as Tables SQL as a Query Language
+Combining Conditions
+Expression in relational algebra
+Name,Color,Vineyard (Vintage>2000(WINES) o nRegion=’California’ (ORIGIN) )
+Query in SQL
+select Name, Color, WINES.Vineyard
+from WINES, ORIGIN
+where Vintage > 2000 and
+Region = ’California’ and
+WINES.Vineyard = ORIGIN.Vineyard
+Saake Database Concepts Last Edited: April 20, 2022 2–30"
+40,"Relational Databases – Data as Tables SQL as a Query Language
+Set Operations in SQL
+In SQL, union is realized by an extra operator, union
+Differences by using nested queries
+select *
+from WINEMAKER
+where Name not in (
+select Surname
+from CRITIC)
+Saake Database Concepts Last Edited: April 20, 2022 2–31"
+41,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Manipulation Operations in SQL
+Saake Database Concepts Last Edited: April 20, 2022 2–32"
+42,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Manipulation Operations in SQL
+insert : Insert one or more tuples into a base relation or view
+update : Change one or more tuples in a base relation or view
+delete : Delete one or more tuples from a base relation or view
+Local and global integrity constraints must be checked
+automatically by the system when executing manipulation
+operations.
+Saake Database Concepts Last Edited: April 20, 2022 2–33"
+43,"Relational Databases – Data as Tables Manipulation Operations in SQL
+The update Statement
+Syntax:
+update base _relation
+set attribute 1= expression 1
+...
+attribute n= expression n
+[where condition ]
+Saake Database Concepts Last Edited: April 20, 2022 2–34"
+44,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Example for update
+WINES WineID Name Color Vintage Vineyard Price
+2168 Creek Shiraz Red 2003 Creek 7.99
+3456 Zinfandel Red 2004 Helena 5.99
+2171 Pinot Noir Red 2001 Creek 10.99
+3478 Pinot Noir Red 1999 Helena 19.99
+4711 Riesling Reserve White 1999 Müller 14.99
+4961 Chardonnay White 2002 Bighorn 9.90
+update WINES
+set Price = Price *1.10
+where Vintage < 2000
+Saake Database Concepts Last Edited: April 20, 2022 2–35"
+45,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Example for update : New Values
+WINES WineID Name Color Vintage Vineyard Price
+2168 Creek Shiraz Red 2003 Creek 7.99
+3456 Zinfandel Red 2004 Helena 5.99
+2171 Pinot Noir Red 2001 Creek 10.99
+3478 Pinot Noir Red 1999 Helena 21.99
+4711 Riesling Reserve White 1999 Müller 16.49
+4961 Chardonnay White 2002 Bighorn 9.90
+Saake Database Concepts Last Edited: April 20, 2022 2–36"
+46,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Additional Notes on update
+Operations on single tuples can be achieved by using the primary
+key:
+update WINES
+set Price = 7.99
+where WineID = 3456
+Update the whole relation:
+update WINES
+set Price = 11
+Saake Database Concepts Last Edited: April 20, 2022 2–37"
+47,"Relational Databases – Data as Tables Manipulation Operations in SQL
+The delete Statement
+Syntax:
+delete
+from base _relation
+[where condition ]
+Delete a tuple from the WINES relation:
+delete from WINES
+where WineID = 4711
+Saake Database Concepts Last Edited: April 20, 2022 2–38"
+48,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Additional Notes on delete
+Deletion of multiple tuples is the common case:
+delete from WINES
+where Color = ’White’
+Delete the whole relation:
+delete from WINES
+Saake Database Concepts Last Edited: April 20, 2022 2–39"
+49,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Additional Notes on delete /2
+Deletions can lead to violation of integrity constraints!
+Example: Violation of the foreign key property if there are still
+wines from this origin:
+delete from ORIGIN
+where District = ’Hessen’
+Saake Database Concepts Last Edited: April 20, 2022 2–40"
+50,"Relational Databases – Data as Tables Manipulation Operations in SQL
+The insert Statement
+Syntax:
+insert
+into base _relation
+[ (attribute 1, ..., attribute n) ]
+values (constant 1, ..., constant n)
+Optional list of attributes allows for insertion of incomplete tuples
+Saake Database Concepts Last Edited: April 20, 2022 2–41"
+51,"Relational Databases – Data as Tables Manipulation Operations in SQL
+insert Examples
+insert into ORIGIN (Vineyard, Region)
+values (’Wairau Hills’, ’Marlborough’)
+Not all attributes given  Value of missing attribute District will
+benull
+insert into ORIGIN
+values (’Château Lafite’, ’Medoc’, ’Bordeaux’)
+Saake Database Concepts Last Edited: April 20, 2022 2–42"
+52,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Inserting Computed Data
+Syntax:
+insert
+into base _relation
+[ (attribute 1, ..., attribute n) ]
+SQL-query
+Example:
+insert into WINES (
+select ProdID, ProdName, ’Red’, ProdYear,
+’Château Lafite’
+from SUPPLIER
+where SName = ’Aspri Spirits’ )
+Saake Database Concepts Last Edited: April 20, 2022 2–43"
+53,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Summary
+Relational model: database as a set of tables
+Integrity constraints in the relational model
+Table deﬁnition in SQL
+Relational algebra: query operators
+Basic concepts of SQL queries and manipulations
+Saake Database Concepts Last Edited: April 20, 2022 2–44"
+54,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Control Questions
+What is a relation?
+What are the deﬁning properties of the
+relational algebra?
+How are objects from the real world
+represented in a relational database?
+How can tables in SQL be deﬁned and
+manipulated?
+What are integrity constraints?
+Saake Database Concepts Last Edited: April 20, 2022 2–45"
+55,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Control Questions
+What is a relation?
+What are the deﬁning properties of the
+relational algebra?
+How are objects from the real world
+represented in a relational database?
+How can tables in SQL be deﬁned and
+manipulated?
+What are integrity constraints?
+Saake Database Concepts Last Edited: April 20, 2022 2–45"
+56,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Control Questions
+What is a relation?
+What are the deﬁning properties of the
+relational algebra?
+How are objects from the real world
+represented in a relational database?
+How can tables in SQL be deﬁned and
+manipulated?
+What are integrity constraints?
+Saake Database Concepts Last Edited: April 20, 2022 2–45"
+57,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Control Questions
+What is a relation?
+What are the deﬁning properties of the
+relational algebra?
+How are objects from the real world
+represented in a relational database?
+How can tables in SQL be deﬁned and
+manipulated?
+What are integrity constraints?
+Saake Database Concepts Last Edited: April 20, 2022 2–45"
+58,"Relational Databases – Data as Tables Manipulation Operations in SQL
+Control Questions
+What is a relation?
+What are the deﬁning properties of the
+relational algebra?
+How are objects from the real world
+represented in a relational database?
+How can tables in SQL be deﬁned and
+manipulated?
+What are integrity constraints?
+Saake Database Concepts Last Edited: April 20, 2022 2–45"

@@ -1,0 +1,1182 @@
+Slide Number,Content
+1,"Part VI
+The Relational Query Language SQL"
+2,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+3,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+4,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+5,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+6,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+7,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+8,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+9,"The Relational Query Language SQL
+The Relational Query Language SQL
+1The SFW Block in Detail
+2Set Operations
+3Nested Queries
+4Extensions of the SFW Block
+5Aggregation and Grouping
+6Special Joins, Sorting, Null Values
+7Recursion
+8History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–1"
+10,"The Relational Query Language SQL
+Educational Objective for Today . . .
+Advanced knowledge of the relational SQL
+Knowledge of extensions of the SFW block
+Understanding the formulation and
+evaluation of recursive queries
+Saake Database Concepts Last Edited: April 20, 2022 6–2"
+11,"The Relational Query Language SQL
+Educational Objective for Today . . .
+Advanced knowledge of the relational SQL
+Knowledge of extensions of the SFW block
+Understanding the formulation and
+evaluation of recursive queries
+Saake Database Concepts Last Edited: April 20, 2022 6–2"
+12,"The Relational Query Language SQL
+Educational Objective for Today . . .
+Advanced knowledge of the relational SQL
+Knowledge of extensions of the SFW block
+Understanding the formulation and
+evaluation of recursive queries
+Saake Database Concepts Last Edited: April 20, 2022 6–2"
+13,"The Relational Query Language SQL The SFW Block in Detail
+The SFW Block in Detail
+Saake Database Concepts Last Edited: April 20, 2022 6–3"
+14,"The Relational Query Language SQL The SFW Block in Detail
+Structure of an SQL Query
+--query
+select projection-list
+from relations-list
+[where condition ]
+select
+Projection list
+Arithmetic operations and aggregation functions
+from
+Relations to use, optionally aliases (renamings)
+where
+Selection and join conditions
+Nested queries (another SFW block)
+Saake Database Concepts Last Edited: April 20, 2022 6–4"
+15,"The Relational Query Language SQL The SFW Block in Detail
+Selection of Tables: The from Clause
+Most simple form:
+IEach relation name may be followed by an optional tuple variable
+select *
+from relations _list
+Example query:
+select *
+from WINES
+Saake Database Concepts Last Edited: April 20, 2022 6–5"
+16,"The Relational Query Language SQL The SFW Block in Detail
+Cartesian Product
+With more than one relation, the Cartesian product (a.k.a. cross
+product) is computed:
+select *
+from WINES, PRODUCER
+Allcombinations are returned!
+Saake Database Concepts Last Edited: April 20, 2022 6–6"
+17,"The Relational Query Language SQL The SFW Block in Detail
+Tuple Variables for Repeated Access
+Using tuple variables, a relation can be accessed several times:
+select *
+from WINES w1, WINES w2
+Columns are then called:
+w1.WineID, w1.Name, w1.Color, w1.Vintage, w1.Vineyard
+w2.WineID, w2.Name, w2.Color, w2.Vintage, w2.Vineyard
+Saake Database Concepts Last Edited: April 20, 2022 6–7"
+18,"The Relational Query Language SQL The SFW Block in Detail
+Natural Join in SQL92
+Early versions of SQL
+IStandard that is usually implemented in current systems
+IOnly know cross product, no explicit join operator
+IJoin achieved with predicate after where
+Example for natural join:
+select *
+from WINES, PRODUCER
+where WINES.Vineyard = PRODUCER.Vineyard
+Saake Database Concepts Last Edited: April 20, 2022 6–8"
+19,"The Relational Query Language SQL The SFW Block in Detail
+Joins as Explicit Operators: natural join
+Newer SQL versions
+IKnow several explicit join operators
+ICan be seen as an abbreviation of the detailed query with cross
+product
+select *
+from WINES natural join PRODUCER
+Saake Database Concepts Last Edited: April 20, 2022 6–9"
+20,"The Relational Query Language SQL The SFW Block in Detail
+Joins as Explicit Operators: join
+Join with arbitrary predicate:
+select *
+from WINES join PRODUCER
+onWINES.Vineyard = PRODUCER.Vineyard
+Equi-joins on columns using the same name with using :
+select *
+from WINES join PRODUCER
+using (Vineyard)
+Saake Database Concepts Last Edited: April 20, 2022 6–10"
+21,"The Relational Query Language SQL The SFW Block in Detail
+Joins as Explicit Operators: cross join
+Cross product (a.k.a. Cartesian product)
+select *
+from WINES, PRODUCER
+Ascross join
+select *
+from WINES cross join PRODUCER
+Saake Database Concepts Last Edited: April 20, 2022 6–11"
+22,"The Relational Query Language SQL The SFW Block in Detail
+Tuple Variable for Intermediate Results
+“Intermediate relations” from SQL operations or an SFW block can
+be named using tuple variables
+select Result.Vineyard
+from (WINES natural join PRODUCER) asResult
+Forfrom, tuple variables are mandatory
+asis optional
+Saake Database Concepts Last Edited: April 20, 2022 6–12"
+23,"The Relational Query Language SQL The SFW Block in Detail
+The select Clause
+Determines projection attributes
+select [distinct ]projection-list
+from ...
+with
+projection-list :=fattributej
+arithmetic-expression j
+aggregation-function g[, ...]
+IAttributes of the relation after the from, optionally with a preﬁx that
+speciﬁes names of relations or names of tuple variables
+IArithmetic expressions over attributes of these relations, as well as
+constants
+IAggregation functions over attributes of these relations
+Saake Database Concepts Last Edited: April 20, 2022 6–13"
+24,"The Relational Query Language SQL The SFW Block in Detail
+The select Clause /2
+Special case of the projection list: *
+IYields all attributes of the relation(s) from the from part
+select *
+from WINES
+Saake Database Concepts Last Edited: April 20, 2022 6–14"
+25,"The Relational Query Language SQL The SFW Block in Detail
+distinct Eliminates Duplicates
+select Name from WINES
+Yields the result relation as a multi-set:
+Name
+La Rose Grand Cru
+Creek Shiraz
+Zinfandel
+Pinot Noir
+Pinot Noir
+Riesling Reserve
+Chardonnay
+Saake Database Concepts Last Edited: April 20, 2022 6–15"
+26,"The Relational Query Language SQL The SFW Block in Detail
+distinct Eliminates Duplicates /2
+select distinct Name from WINES
+Yields projection from the relational algebra:
+Name
+La Rose Grand Cru
+Creek Shiraz
+Zinfandel
+Pinot Noir
+Riesling Reserve
+Chardonnay
+Saake Database Concepts Last Edited: April 20, 2022 6–16"
+27,"The Relational Query Language SQL The SFW Block in Detail
+Tuple Variables and Relation Names
+Query
+select Name from WINES
+is equivalent to
+select WINES.Name from WINES
+and
+select W.Name from WINES W
+Saake Database Concepts Last Edited: April 20, 2022 6–17"
+28,"The Relational Query Language SQL The SFW Block in Detail
+Preﬁxes for Unambiguousness
+select Name, Vintage, Vineyard -- (wrong!)
+from WINES natural join PRODUCER
+Attribute Vineyard exists in both tables, WINES and PRODUCER !
+Correct with preﬁx:
+select Name, Vintage, PRODUCER.Vineyard
+from WINES natural join PRODUCER
+Saake Database Concepts Last Edited: April 20, 2022 6–18"
+29,"The Relational Query Language SQL The SFW Block in Detail
+Preﬁxes for Unambiguousness /2
+When using tuple variables, the name of a tuple variable can be
+used to qualify an attribute:
+select w1.Name, w2.Vineyard
+from WINES w1, WINES w2
+Saake Database Concepts Last Edited: April 20, 2022 6–19"
+30,"The Relational Query Language SQL The SFW Block in Detail
+The where Clause
+select ...from ...
+where condition
+Forms of the condition:
+IComparing an attribute with a constant:
+attribute constant
+possible comparison symbols depend on the domain; e.g., =,
+<>,>,<,>=or<=.
+IComparison between two attributes with compatible domains:
+attribute1 attribute2
+ILogical connectors or,andand not
+Saake Database Concepts Last Edited: April 20, 2022 6–20"
+31,"The Relational Query Language SQL The SFW Block in Detail
+Join Condition
+Join condition has the form:
+relation1.attribute =relation2.attribute
+Example:
+select Name, Vintage, PRODUCER.Vineyard
+from WINES, PRODUCER
+where WINES.Vineyard = PRODUCER.Vineyard
+Saake Database Concepts Last Edited: April 20, 2022 6–21"
+32,"The Relational Query Language SQL The SFW Block in Detail
+Range Selection
+Range selection
+attrib between constant 1and constant 2
+is abbreviation for
+attribconstant 1and
+attribconstant 2
+Restricts attribute values to the closed interval [constant 1,
+constant 2]
+Example:
+select *from WINES
+where Vintage between 2000 and 2005
+Saake Database Concepts Last Edited: April 20, 2022 6–22"
+33,"The Relational Query Language SQL The SFW Block in Detail
+Imprecise Selection
+Notation
+attribute like special-constant
+Pattern matching in strings (search for multiple substrings)
+Special constant can contain the wildcard characters ‘%’ and ‘_’
+I‘%’ stands for no character or an arbitrary string of characters
+I‘_’ stands for exactly one character
+Saake Database Concepts Last Edited: April 20, 2022 6–23"
+34,"The Relational Query Language SQL The SFW Block in Detail
+Imprecise Selection /2
+Example
+select *from WINES
+where Name like ’La Rose%’
+is shorthand for
+select *from WINES
+where Name = ’La Rose’
+orName = ’La RoseA’ orName = ’La RoseAA’ ...
+orName = ’La RoseB’ orName = ’La RoseBB’ ...
+...
+orName = ’La Rose Grand Cru’ ...
+orName = ’La Rose Grand Cru Classe’ ...
+...
+orName = ’La RoseZZZZZZZZZZZZZ’ ...
+Saake Database Concepts Last Edited: April 20, 2022 6–24"
+35,"The Relational Query Language SQL Set Operations
+Set Operations
+Saake Database Concepts Last Edited: April 20, 2022 6–25"
+36,"The Relational Query Language SQL Set Operations
+Set Operations
+Set operation require compatible domains for pairs of
+corresponding attributes:
+IBoth domains are equal, or
+Iboth domains are based on character (irrespective of the length of
+the strings), or
+Iboth domains are numeric (irrespective of the exact types), such as
+integer orfloat .
+Result schema := schema of the “left” relation
+select A, B, C from R1
+union
+select A, C, D from R2
+Saake Database Concepts Last Edited: April 20, 2022 6–26"
+37,"The Relational Query Language SQL Set Operations
+Set Operations in SQL
+Union ,intersection anddifference asunion ,intersect and
+except
+Can be used orthogonally:
+select *
+from (select Vineyard from PRODUCER
+except select Vineyard from WINES)
+equivalent to
+select *
+from PRODUCER except corresponding WINES
+Saake Database Concepts Last Edited: April 20, 2022 6–27"
+38,"The Relational Query Language SQL Set Operations
+Set Operations in SQL /2
+Viacorresponding by clause: speciﬁcation of the list of attributes
+over which to perform the set operation
+select *
+from PRODUCER except corresponding by (Vineyard) WINES
+When using union: Default case is duplicate removal ( union
+distinct ); without duplicate removal when using union all
+Saake Database Concepts Last Edited: April 20, 2022 6–28"
+39,"The Relational Query Language SQL Set Operations
+Set Operations in SQL /3
+RABC
+123
+234SACD
+234
+245
+R union S ABC
+123
+234
+245R union all S ABC
+123
+234
+234
+245
+R union corresponding S AC
+13
+24
+23
+R union corresponding by (A)SA
+1
+2
+Saake Database Concepts Last Edited: April 20, 2022 6–29"
+40,"The Relational Query Language SQL Nested Queries
+Nested Queries
+Saake Database Concepts Last Edited: April 20, 2022 6–30"
+41,"The Relational Query Language SQL Nested Queries
+Nesting Queries
+Necessary for comparing sets of values:
+IStandard comparisons in combination with the quantiﬁers all(8) or
+any(9)
+ISpecial predicates for working with sets, inand exists
+Saake Database Concepts Last Edited: April 20, 2022 6–31"
+42,"The Relational Query Language SQL Nested Queries
+inPredicate and Nested Queries
+Notation:
+attribute in(SFW-block )
+Example:
+select Name
+from WINES
+where Vineyard in(
+select Vineyard from PRODUCER
+where Region=’Bordeaux’)
+Saake Database Concepts Last Edited: April 20, 2022 6–32"
+43,"The Relational Query Language SQL Nested Queries
+Evaluation of Nested Queries
+1Evaluation of the inner query regarding the vineyards from
+Bordeaux
+2Insertion of the results as a set of constants in the outer query
+after in
+3Evaluation of the modiﬁed query
+select Name
+from WINES
+where Vineyard in(
+’Château La Rose’, ’Château La Pointe’)
+Name
+La Rose Grand Cru
+Saake Database Concepts Last Edited: April 20, 2022 6–33"
+44,"The Relational Query Language SQL Nested Queries
+Evaluation of Nested Queries /2
+Internal evaluation: transformation into a join
+select Name
+from WINES natural join PRODUCER
+where Region = ’Bordeaux’
+Saake Database Concepts Last Edited: April 20, 2022 6–34"
+45,"The Relational Query Language SQL Nested Queries
+Negation of the inPredicate
+Simulation of the difference operator
+Vineyard (PRODUCER ) Vineyard (WINES )
+using the SQL query
+select Vineyard from PRODUCER
+where Vineyard not in (
+select Vineyard from WINES )
+Saake Database Concepts Last Edited: April 20, 2022 6–35"
+46,"The Relational Query Language SQL Nested Queries
+Expressiveness of the SQL Kernel
+Relational Algebra SQL
+Projection select distinct
+Selection where without nesting
+Join from,where
+from with join ornatural join
+Renaming from with tuple variable; as
+Difference where with nesting
+except corresponding
+Intersection where with nesting
+intersect corresponding
+Union union corresponding
+Saake Database Concepts Last Edited: April 20, 2022 6–36"
+47,"The Relational Query Language SQL Extensions of the SFW Block
+Extensions of the SFW Block
+Saake Database Concepts Last Edited: April 20, 2022 6–37"
+48,"The Relational Query Language SQL Extensions of the SFW Block
+Additional Notes on SQL
+Extensions of the SFW block
+IFurther join operations inside the from clause (outer join),
+IOther kinds of conditions and conditions using quantiﬁers inside the
+where clause,
+IApplication of scalar operations and aggregation functions inside
+theselect clause,
+IAdditional clauses group by and having
+Recursive queries
+Saake Database Concepts Last Edited: April 20, 2022 6–38"
+49,"The Relational Query Language SQL Extensions of the SFW Block
+Scalar Expressions
+Renaming of columns: expression asnew-name
+Scalar operations on
+INumeric domains: for instance +, ,and=,
+IStrings: Operations such as char _length (current length of a
+string), concatenation kand the substring operation (extract a
+substring starting at a certain position in the string),
+IDates and time intervals: operations such as current _date (current
+date), current _time (current time), +, and
+Conditional expressions
+Type conversion
+Notes:
+IScalar expressions can comprise multiple attributes
+IApplication is performed tuple-wise: one output tuple is created for
+each input tuple
+Saake Database Concepts Last Edited: April 20, 2022 6–39"
+50,"The Relational Query Language SQL Extensions of the SFW Block
+Scalar Expressions /2
+Return the names of all Grand-Cru wines
+select substring (Name from 1for
+(char _length (Name) - position (’Grand Cru’ inName)))
+from WINES where Name like ’%Grand Cru’
+Assumption: additional attribute ProdDate inWINES
+alter table WINES add column ProdDate date
+update WINES set ProdDate = date ’2004-08-13’
+where Name = ’Zinfandel’
+Query:
+select Name, year (current _date - ProdDate) asAge
+from WINES
+Saake Database Concepts Last Edited: April 20, 2022 6–40"
+51,"The Relational Query Language SQL Extensions of the SFW Block
+Conditional Expressions
+case expression: return a value depending on the Evaluation of
+predicate
+case
+when predicate 1then expression 1
+...
+when predicate n 1then expression n 1
+[else expression n]
+end
+Use in select - and where clause
+select case
+when Color = ’Red’ then ’Red wine’
+when Color = ’White’ then ’White wine’
+else ’Other’
+end as WineType, Name from WINES
+Saake Database Concepts Last Edited: April 20, 2022 6–41"
+52,"The Relational Query Language SQL Extensions of the SFW Block
+Type Conversion
+Explicit conversion of the types of expressions
+cast (expression astypname )
+Example: intvalues as strings for the concatenation operator
+select cast (Vintage asvarchar) || ’ ’ ||
+Name asDescription
+from WINES
+Saake Database Concepts Last Edited: April 20, 2022 6–42"
+53,"The Relational Query Language SQL Extensions of the SFW Block
+Quantiﬁers and Set Comparisons
+Quantiﬁers: all,any,some and exists
+Notation
+attribute falljanyjsomeg(
+select attribute
+from ...where ...)
+all:where condition is fulﬁlled if for all tuples of the inner SFW
+block, the-comparison with attribute evaluates to true
+anyand some:where condition is fulﬁlled if the -comparison
+evaluates to true for at least one tuple of the inner SFW block
+Saake Database Concepts Last Edited: April 20, 2022 6–43"
+54,"The Relational Query Language SQL Extensions of the SFW Block
+Conditions with Quantiﬁers: Examples
+Determine the oldest wine
+select *
+from WINES
+where Vintage <= all (
+select Vintage from WINES)
+All vineyards that produce red wines
+select *
+from PRODUCER
+where Vineyard = any (
+select Vineyard from WINES
+where Color = ’Red’)
+Saake Database Concepts Last Edited: April 20, 2022 6–44"
+55,"The Relational Query Language SQL Extensions of the SFW Block
+Comparison of Sets of Values
+Test for equality of two sets impossible with quantiﬁers alone
+Example: “Return all producers that produce both, red and white
+wines.”
+Wrong query
+select Vineyard
+from WINES
+where Color = ’Red’ and Color = ’White’
+Correct query
+select w1.Vineyard
+from WINES w1, WINES w2
+where w1.Vineyard = w2.Vineyard
+and w1.Color = ’Red’ and w2.Color = ’White’
+Saake Database Concepts Last Edited: April 20, 2022 6–45"
+56,"The Relational Query Language SQL Extensions of the SFW Block
+The exists /not exists Predicate
+Simple form of nesting
+exists (SFW-block )
+Yields true if the result of the inner query is not empty
+Especially useful for correlated subqueries (a.k.a. synchronized
+subqueries)
+IIn the inner query, the relation names and tuple variable names
+from the from part of the outer query are used
+Saake Database Concepts Last Edited: April 20, 2022 6–46"
+57,"The Relational Query Language SQL Extensions of the SFW Block
+Synchronized Subqueries
+Vineyards with 1999 red wine
+select *from PRODUCER
+where 1999 in(
+select Vintage from WINES
+where Color=’Red’ and WINES.Vineyard = PRODUCER.Vineyard)
+Conceptual evaluation
+1Examination of the ﬁrst PRODUCER tuple the outer query (Creek) and
+insertion into the inner query
+2Evaluation of the inner query
+select Vintage from WINES
+where Color=’Red’ and WINES.Vineyard = ’Creek’
+3Continue at step 1. with second tuple . . .
+Alternative: reformulation as join
+Saake Database Concepts Last Edited: April 20, 2022 6–47"
+58,"The Relational Query Language SQL Extensions of the SFW Block
+Example for exists
+Vineyards from Bordeaux without known wines
+select *from PRODUCER e
+where Region = ’Bordeaux’ and not exists (
+select *from WINES
+where Vineyard = e.Vineyard)
+Saake Database Concepts Last Edited: April 20, 2022 6–48"
+59,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation and Grouping
+Saake Database Concepts Last Edited: April 20, 2022 6–49"
+60,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions and Grouping
+Aggregation functions calculate new values for the whole column,
+such as the sum or the average of the values of a column
+Example: Determination of the average price of articles or the
+total sales of all sold products
+With additional grouping: calculation of functions per group, e.g.,
+the average price per Product group or the total sales per
+customer
+Saake Database Concepts Last Edited: April 20, 2022 6–50"
+61,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions
+Aggregation functions in Standard-SQL:
+Icount : calculates the number of values in a column or alternatively
+(in a special case count ()) the number of tuples of a relation
+Isum: calculates the sum of all values in a column (only for numeric
+values)
+Iavg: calculates the arithmetic mean of the values of a column (only
+for numeric domains)
+Imaxresp. min: calculate the biggest or smallest value of a column
+Saake Database Concepts Last Edited: April 20, 2022 6–51"
+62,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions /2
+Arguments of a aggregation function:
+Ian attribute of the from-""""clause speciﬁed relation,
+Ia valid scalar expression or,
+Iin the clause of the count -""""function also the symbol 
+Saake Database Concepts Last Edited: April 20, 2022 6–52"
+63,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions /3
+Before the argument (except of the case count ()) optional also
+the keywords distinct orall
+Idistinct : before application of aggregation functions, duplicate
+values are removed from the set of values on which the function is
+applied
+Iall: duplicates are used in calculations (default setting)
+Inull values are always eliminated before the function is applied
+(except of the case of count ())
+Saake Database Concepts Last Edited: April 20, 2022 6–53"
+64,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions – Examples
+Number of wines
+select count (*)asNumber
+from WINES
+results in
+Number
+7
+Saake Database Concepts Last Edited: April 20, 2022 6–54"
+65,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions – Examples /2
+Number of distinct wine regions:
+select count (distinct Region)
+from PRODUCER
+Wines that are older than the average:
+select Name, Vintage
+from WINES
+where Vintage < ( select avg (Vintage) from WINES)
+All producers that deliver exactly one wine:
+select *from PRODUCER e
+where 1 = ( select count (*)from WINES w
+where w.Vineyard = e.Vineyard)
+Saake Database Concepts Last Edited: April 20, 2022 6–55"
+66,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions /2
+Nesting of aggregation functions is not allowed
+select f1(f2(A))asResult
+from R... -- (Wrong!)
+Possible formalization:
+select f1(Temp) asResult
+from (select f2(A)asTemp from R...)
+Saake Database Concepts Last Edited: April 20, 2022 6–56"
+67,"The Relational Query Language SQL Aggregation and Grouping
+Aggregation Functions in where Clause
+Aggregation functions give only one value  Application in
+Constants-""""Selections of the where -""""Clause possible
+All producers that deliver exactly one wine:
+select *from PRODUCER e
+where 1 = (
+select count (*)from WINES w
+where w.Vineyard = e.Vineyard)
+Saake Database Concepts Last Edited: April 20, 2022 6–57"
+68,"The Relational Query Language SQL Aggregation and Grouping
+group by and having
+Notation
+select ...
+from ...
+[where ...]
+[group by attribute-list ]
+[having condition ]
+Saake Database Concepts Last Edited: April 20, 2022 6–58"
+69,"The Relational Query Language SQL Aggregation and Grouping
+Grouping: Scheme
+Relation REL:
+ABC D
+123 4
+124 5
+233 4
+334 5
+336 7
+. . .
+Query:
+select A,sum(D) from REL where ...
+group by A, B
+having A<4and sum (D)<10and max (C)=4
+Saake Database Concepts Last Edited: April 20, 2022 6–59"
+70,"The Relational Query Language SQL Aggregation and Grouping
+Grouping: Step 1
+from and where
+ABCD
+1234
+1245
+2334
+3345
+3367
+. . .àABCD
+1234
+1245
+2334
+3345
+3367
+Saake Database Concepts Last Edited: April 20, 2022 6–60"
+71,"The Relational Query Language SQL Aggregation and Grouping
+Grouping: Step 2
+group by A, B
+ABCD
+1234
+1245
+2334
+3345
+3367àAB N
+CD
+1234
+45
+2334
+3345
+67
+Saake Database Concepts Last Edited: April 20, 2022 6–61"
+72,"The Relational Query Language SQL Aggregation and Grouping
+Grouping: Step 3
+select A,sum(D)
+AB N
+CD
+1234
+45
+2334
+3345
+67àAsum(D) N
+CD
+19 34
+45
+24 34
+312 45
+67
+Saake Database Concepts Last Edited: April 20, 2022 6–62"
+73,"The Relational Query Language SQL Aggregation and Grouping
+Grouping: Step 4
+having A<4and sum (D)<10and max (C)=4
+Asum(D) N
+CD
+19 34
+45
+24 34
+312 45
+67àAsum(D)
+19
+Saake Database Concepts Last Edited: April 20, 2022 6–63"
+74,"The Relational Query Language SQL Aggregation and Grouping
+Grouping - Example
+Number of red and white wines:
+select Color, count (*)asNumber
+from WINES
+group by Color
+Result relation:
+Color Number
+red 5
+white 2
+Saake Database Concepts Last Edited: April 20, 2022 6–64"
+75,"The Relational Query Language SQL Aggregation and Grouping
+having - Example
+Region with more than one wine
+select Region, count (*)asNumber
+from PRODUCER natural join WINES
+group by Region
+having count (*) > 1
+Saake Database Concepts Last Edited: April 20, 2022 6–65"
+76,"The Relational Query Language SQL Aggregation and Grouping
+Attributes for Aggregation resp. having
+Valid attributes after select at grouping on relation with scheme R
+IGrouping attributes G
+IAggregations on non-grouping attributes R G
+Valid attributes for having
+Idito
+Saake Database Concepts Last Edited: April 20, 2022 6–66"
+77,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Special Joins, Sorting, Null Values
+Saake Database Concepts Last Edited: April 20, 2022 6–67"
+78,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Outer Joins
+Additionally to classic join ( inner join ): in SQL-92 also outer join
+ Adoption of “dangling tuples” into the result and completion
+with null values
+outer join takes all tuples of both operands (long version: full
+outer join )
+left outer join resp. right outer join takes all tuples of the
+left resp. right operand
+Outer natural join each with keyword natural , e.g. natural left
+outer join
+Saake Database Concepts Last Edited: April 20, 2022 6–68"
+79,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Outer Joins /2
+LEFT AB
+12
+23RIGHT BC
+34
+45NATURAL JOIN ABC
+234
+OUTER A BC
+12?
+234
+?45LEFT ABC
+12?
+234RIGHT A BC
+234
+?45
+Saake Database Concepts Last Edited: April 20, 2022 6–69"
+80,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Outer Join: Example
+select Region, count (WineID) asNumber
+from PRODUCER natural left outer join WINES
+group by Region
+Region Number
+Barossa Valley 2
+Napa Valley 3
+Saint-Emilion 1
+Pomerol 0
+Rheingau 1
+Saake Database Concepts Last Edited: April 20, 2022 6–70"
+81,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Simulation of the Outer Join
+Left outer join
+select *
+from PRODUCER natural join WINES
+union all
+select PRODUCER. *,cast (null as int ),
+cast (null as varchar (20)),
+cast (null as varchar (10)), cast (null as int ),
+cast (null as varchar (20))
+from PRODUCER e
+where not exists (
+select *
+from WINES
+where WINES.Vineyard = e.Vineyard)
+Saake Database Concepts Last Edited: April 20, 2022 6–71"
+82,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Sorting with order by
+Notation
+order by attribute-list
+Example:
+select *
+from WINES
+order by Vintage
+Sorting ascending ( asc) or descending ( desc)
+Sorting as last operation of a query  Sort attribute must be
+contained in the select clause
+Saake Database Concepts Last Edited: April 20, 2022 6–72"
+83,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Sorting /2
+Sorting also with calculated attributes (aggregates) as sort
+criterion
+select Vineyard, count (*)asNumber
+from PRODUCER natural join WINES
+group by Vineyard
+order by Number desc
+Saake Database Concepts Last Edited: April 20, 2022 6–73"
+84,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Sorting: Top-k-Queries
+Query, that gives the best kelements for a ranking function
+select w1.Name, count (*)asRank
+from WINES w1, WINES w2
+where w1.Vintage <= w2.Vintage -- Step 1
+group by w1.Name, w1.WineID -- Step 2
+having count (*) <= 4 -- Step 3
+order by Rank -- Step 4
+Name Rank
+Zinfandel 1
+Creek Shiraz 2
+Chardonnay 3
+Pinot Noir 4
+Saake Database Concepts Last Edited: April 20, 2022 6–74"
+85,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Sorting: Top-k-Queries
+Determination of the k=4youngest wines
+Explanation
+IStep 1: assignment of all wines that are older
+IStep 2: grouping by names, determination of the rank
+IStep 3: restriction to ranks 4
+IStep 4: sorting by rank
+Saake Database Concepts Last Edited: April 20, 2022 6–75"
+86,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Handling of Null Values
+Scalar Expressions: Result null, when null value is used in
+calculation
+In all aggregation functions (except of count ()) null values are
+removed before the function is applied
+Almost all comparisons with null values result in unknown (instead
+oftrue orfalse )
+Exception: is null gives true and is not null gives false
+Boolean expressions are then based on three-valued logic
+Saake Database Concepts Last Edited: April 20, 2022 6–76"
+87,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Handling of Null Values /2
+and true unknown false
+true true unknown false
+unknown unknown unknown false
+false false false false
+or true unknown false
+true true true true
+unknown true unknown unknown
+false true unknown false
+not
+true false
+unknown unknown
+false true
+Saake Database Concepts Last Edited: April 20, 2022 6–77"
+88,"The Relational Query Language SQL Special Joins, Sorting, Null Values
+Selection of Null Values
+Null-Selection selects tuples that contain null values for a certain
+attribute
+Notation
+attribute is null
+Example
+select *from PRODUCER
+where Region is null
+Saake Database Concepts Last Edited: April 20, 2022 6–78"
+89,"The Relational Query Language SQL Recursion
+Recursion
+Saake Database Concepts Last Edited: April 20, 2022 6–79"
+90,"The Relational Query Language SQL Recursion
+Named Queries
+Query expression that can be referenced multiple times in a query
+Notation
+with query-name [(column-list ) ] as
+(query-expression )
+Query without with
+select *
+from WINES
+where Vintage - 2 >= (
+select avg (Vintage) from WINES)
+and Vintage + 2 <= (
+select avg (Vintage) from WINES)
+Saake Database Concepts Last Edited: April 20, 2022 6–80"
+91,"The Relational Query Language SQL Recursion
+Named Queries /2
+Query with with
+with AGE(Average) as(
+select avg (Vintage) from WINES)
+select *
+from WINES, AGE
+where Vintage - 2 >= Average
+and Vintage + 2 <= Average
+Saake Database Concepts Last Edited: April 20, 2022 6–81"
+92,"The Relational Query Language SQL Recursion
+Recursive Queries
+Application: Bill of Material -Queries, Calculation of the transitive
+closure (ﬂight connection etc.)
+Example:
+BUSLINE Departure Arrival Distance
+Nuriootpa Penrice 7
+Nuriootpa Tanunda 7
+Tanunda Seppeltsﬁeld 9
+Tanunda Bethany 4
+Bethany Lyndoch 14
+Saake Database Concepts Last Edited: April 20, 2022 6–82"
+93,"The Relational Query Language SQL Recursion
+Recursive Queries /2
+Bus trips with max. two transfers
+select Departure, Arrival
+from BUSLINE
+where Departure = ’Nuriootpa’
+union
+select B1.Departure, B2.Arrival
+from BUSLINE B1, BUSLINE B2
+where B1.Departure = ’Nuriootpa’ and B1.Arrival = B2.Departure
+union
+select B1.Departure, B3.Arrival
+from BUSLINIE B1, BUSLINIE B2, BUSLINIE B3
+where B1.Departure = ’Nuriootpa’ and B1.Arrival = B2.Departure
+and B2.Arrival = B3.Departure
+Saake Database Concepts Last Edited: April 20, 2022 6–83"
+94,"The Relational Query Language SQL Recursion
+Recursion in SQL:2003
+Formulation via extended with recursive -query
+Notation
+with recursive recursive-table as(
+query-expression --recursive part
+)
+[traversal-clause ] [cycle-clause ]
+query-expression --non-recursive part
+Non-recursive part: query of recursion table
+Saake Database Concepts Last Edited: April 20, 2022 6–84"
+95,"The Relational Query Language SQL Recursion
+Recursion in SQL:2003 /2
+Recursive part:
+--Initialization
+select ...
+from table where ...
+--Recursion step
+union all
+select ...
+from table ,recursion table
+where recursion condition
+Saake Database Concepts Last Edited: April 20, 2022 6–85"
+96,"The Relational Query Language SQL Recursion
+Recursion in SQL:2003: Example
+with recursive TOUR(Departure, Arrival) as(
+select Departure, Arrival
+from BUSLINE
+where Departure = ’Nuriootpa’
+union all
+select T.Departure, B.Arrival
+from TOUR T, BUSLINE B
+where T.Arrival = B.Departure)
+select distinct *from TOUR
+Saake Database Concepts Last Edited: April 20, 2022 6–86"
+97,"The Relational Query Language SQL Recursion
+Step-Wise Composition of the Recursion Table TOUR
+Initialization
+Departure Arrival
+Nuriootpa Penrice
+Nuriootpa TanundaStep 1
+Departure Arrival
+Nuriootpa Penrice
+Nuriootpa Tanunda
+Nuriootpa Seppeltsﬁeld
+Nuriootpa Bethany
+Step 2
+Departure Arrival
+Nuriootpa Penrice
+Nuriootpa Tanunda
+Nuriootpa Seppeltsﬁeld
+Nuriootpa Bethany
+Nuriootpa Lyndoch
+Saake Database Concepts Last Edited: April 20, 2022 6–87"
+98,"The Relational Query Language SQL Recursion
+Recursion: Example /2
+Arithmetic operations in the recursion step
+with recursive TOUR(Departure, Arrival, Route) as(
+select Departure, Arrival, Distance asRoute
+from BUSLINE
+where Departure = ’Nuriootpa’
+union all
+select T.Departure, B.Arrival, Route + Distance asRoute
+from TOUR T, BUSLINE B
+where T.Arrival = B.Departure)
+select distinct *from TOUR
+Saake Database Concepts Last Edited: April 20, 2022 6–88"
+99,"The Relational Query Language SQL Recursion
+Safety of Recursive Queries
+Safety (= ﬁniteness of the calculation) is the most important
+requirement on a query language
+Problem: cycles in the recursion
+insert into BUSLINE (Departure, Arrival, Distance)
+values (’Lyndoch’, ’Tanunda’, 12)
+Handling in SQL
+ILimitation of the recursion depth
+ICycle detection
+Saake Database Concepts Last Edited: April 20, 2022 6–89"
+100,"The Relational Query Language SQL Recursion
+Safety of Recursive Queries /2
+Restriction on the recursion depth
+with recursive TOUR(Departure, Arrival, Transitions) as(
+select Departure, Arrival, 0
+from BUSLINE
+where Departure = ’Nuriootpa’
+union all
+select T.Departure, B.Arrival, Transitions + 1
+from TOUR T, BUSLINE B
+where T.Arrival = B.Departure and Transitions < 2)
+select distinct *from TOUR
+Saake Database Concepts Last Edited: April 20, 2022 6–90"
+101,"The Relational Query Language SQL Recursion
+Safety through Cycle Detection
+Cycle Clause
+Iat detection of duplicates in the calculation path attrib :Cycle = ’ *’
+(Pseudo column of type char(1))
+IGuarantee the ﬁniteness of the result “by hand”
+cycle attrib set marke to’*’default ’-’
+Saake Database Concepts Last Edited: April 20, 2022 6–91"
+102,"The Relational Query Language SQL Recursion
+Safety through Cycle Detection
+with recursive TOUR(Departure, Arrival, Way) as(
+select Departure, Arrival, Departure || ’-’ || Arrival asWay
+from BUSLINIE where Departure = ’Nuriootpa’
+union all
+select T.Departure, B.Arrival, Way || ’-’ || B. Arrival asWay
+from TOUR T, BUSLINIE B where T.Arrival = B.Departure)
+cycle Arrival set Cycle to’*’default ’-’
+select Way, Cycle from TOUR
+Way Cyle
+Nuriootpa-Penrice -
+Nuriootpa-Tanunda -
+Nuriootpa-Tanunda-Seppeltsﬁeld -
+Nuriootpa-Tanunda-Bethany -
+Nuriootpa-Tanunda-Bethany-Lyndoch -
+Nuriootpa-Tanunda-Bethany-Lyndoch-Tanunda *
+Saake Database Concepts Last Edited: April 20, 2022 6–92"
+103,"The Relational Query Language SQL History and Summary
+History and Summary
+Saake Database Concepts Last Edited: April 20, 2022 6–93"
+104,"The Relational Query Language SQL History and Summary
+SQL-Versions
+History
+ISEQUEL (1974, IBM Research Labs San Jose)
+ISEQUEL2 (1976, IBM Research Labs San Jose)
+ISQL (1982, IBM)
+IANSI-SQL (SQL-86; 1986)
+IISO-SQL (SQL-89; 1989; three Languages Level 1, Level 2, +IEF)
+I(ANSI / ISO) SQL2 (as SQL-92 adopted)
+I(ANSI / ISO) SQL3 (as SQL:1999 adopted)
+I(ANSI / ISO) SQL:2003 . . . current SQL:2011
+Despite of standardization: partly incompatible among systems of
+certain producers
+Saake Database Concepts Last Edited: April 20, 2022 6–94"
+105,"The Relational Query Language SQL History and Summary
+Summary
+SQL as standard language
+SQL-Core with reference to relational algebra
+Extensions: Grouping, Recursion etc.
+Saake Database Concepts Last Edited: April 20, 2022 6–95"
+106,"The Relational Query Language SQL History and Summary
+Control Questions
+What are the options to formalize joins?
+What do aggregations and grouping
+calculate?
+Which operations can be used for the
+handling of null values?
+What is the purpose of recursive queries
+in SQL?
+Saake Database Concepts Last Edited: April 20, 2022 6–96"
+107,"The Relational Query Language SQL History and Summary
+Control Questions
+What are the options to formalize joins?
+What do aggregations and grouping
+calculate?
+Which operations can be used for the
+handling of null values?
+What is the purpose of recursive queries
+in SQL?
+Saake Database Concepts Last Edited: April 20, 2022 6–96"
+108,"The Relational Query Language SQL History and Summary
+Control Questions
+What are the options to formalize joins?
+What do aggregations and grouping
+calculate?
+Which operations can be used for the
+handling of null values?
+What is the purpose of recursive queries
+in SQL?
+Saake Database Concepts Last Edited: April 20, 2022 6–96"
+109,"The Relational Query Language SQL History and Summary
+Control Questions
+What are the options to formalize joins?
+What do aggregations and grouping
+calculate?
+Which operations can be used for the
+handling of null values?
+What is the purpose of recursive queries
+in SQL?
+Saake Database Concepts Last Edited: April 20, 2022 6–96"
